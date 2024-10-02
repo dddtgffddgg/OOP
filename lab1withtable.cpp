@@ -46,7 +46,7 @@ void delete_dish(int index) {
 void print_table_header() {
     cout << left << setw(5) << "№" 
          << setw(25) << "Название" 
-         << setw(20) << "Категория" 
+         << setw(25) << "Категория" 
          << setw(10) << "Калории" 
          << setw(10) << "Вес" 
          << setw(10) << "Цена" << endl;
@@ -102,7 +102,7 @@ void print_second_courses() {
             found = true;
             cout << left << setw(5) << i + 1
                  << setw(25) << dishes[i].name
-                 << setw(20) << dishes[i].category
+                 << setw(25) << dishes[i].category
                  << setw(10) << dishes[i].calories
                  << setw(10) << dishes[i].weight << " г"
                  << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << endl;
