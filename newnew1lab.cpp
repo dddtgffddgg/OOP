@@ -5,7 +5,6 @@ using namespace std;
 
 const int MAX_DISHES = 100; // максимальное количество блюд
 
-// Определение структуры для блюда
 struct Dish {
     string name;
     string category;
@@ -14,11 +13,10 @@ struct Dish {
     float price;
 };
 
-// Массив для хранения блюд и счетчик блюд
 Dish dishes[MAX_DISHES];
 int dish_count = 0; // количество блюд в данный момент
 
-// Функции для работы с блюдами
+//функции для работы с блюдами
 int get_dish_count() {
     return dish_count;
 }
@@ -28,7 +26,7 @@ void add_dish(const Dish& new_dish) {
         dishes[dish_count] = new_dish;
         dish_count++;
     } else {
-        cout << "Unable to add more dishes.\n";
+        cout << "Невозможно добавить больше блюд.\n";
     }
 }
 
@@ -39,69 +37,69 @@ void delete_dish(int index) {
         }
         dish_count--; // уменьшаем количество блюд
     } else {
-        cout << "Invalid index.\n";
+        cout << "Неправильный ввод.\n";
     }
 }
 
 void print_dishes() {
     for (int i = 0; i < get_dish_count(); ++i) {
-        cout << "Dish " << i + 1 << ":\n";
-        cout << "Name: " << dishes[i].name << "\n";
-        cout << "Category: " << dishes[i].category << "\n";
-        cout << "Calories: " << dishes[i].calories << " kcal\n";
-        cout << "Weight: " << dishes[i].weight << (dishes[i].category == "Drinks" ? " ml" : " grams") << "\n";
-        cout << "Price: $" << dishes[i].price << "\n\n";
+        cout << "Блюдо " << i + 1 << ":\n";
+        cout << "Название: " << dishes[i].name << "\n";
+        cout << "Категория: " << dishes[i].category << "\n";
+        cout << "Калории: " << dishes[i].calories << " ккал\n";
+        cout << "Граммовка: " << dishes[i].weight << (dishes[i].category == "Напитки" ? " мл" : " грамм") << "\n";
+        cout << "Прайс: " << dishes[i].price << " руб. \n\n";
     }
 }
 
 void print_first_courses() {
-    cout << "First Courses:\n";
+    cout << "Основные блюда:\n";
     for (int i = 0; i < get_dish_count(); ++i) {
-        if (dishes[i].category == "First Courses") {
-            cout << "Dish " << i + 1 << ":\n";
-            cout << "Name: " << dishes[i].name << "\n";
-            cout << "Calories: " << dishes[i].calories << " kcal\n";
-            cout << "Weight: " << dishes[i].weight << " grams\n";
-            cout << "Price: $" << dishes[i].price << "\n\n";
+        if (dishes[i].category == "Основные блюда") {
+            cout << "Блюдо " << i + 1 << ":\n";
+            cout << "Название: " << dishes[i].name << "\n";
+            cout << "Калории: " << dishes[i].calories << " ккал\n";
+            cout << "Граммовка: " << dishes[i].weight << " грамм\n";
+            cout << "Прайс: " << dishes[i].price << " руб. \n\n";
         }
     }
 }
 
 void print_second_courses() {
-    cout << "Second Courses:\n";
+    cout << "Вторые блюда:\n";
     for (int i = 0; i < get_dish_count(); ++i) {
-        if (dishes[i].category == "Second Courses") {
-            cout << "Dish " << i + 1 << ":\n";
-            cout << "Name: " << dishes[i].name << "\n";
-            cout << "Calories: " << dishes[i].calories << " kcal\n";
-            cout << "Weight: " << dishes[i].weight << " grams\n";
-            cout << "Price: $" << dishes[i].price << "\n\n";
+        if (dishes[i].category == "Вторые блюда") {
+            cout << "Блюдо " << i + 1 << ":\n";
+            cout << "Нзвание: " << dishes[i].name << "\n";
+            cout << "Калории: " << dishes[i].calories << " ккал\n";
+            cout << "Граммы: " << dishes[i].weight << " грамм\n";
+            cout << "Прайс: " << dishes[i].price << " руб. \n\n";
         }
     }
 }
 
 void print_desserts() {
-    cout << "Desserts:\n";
+    cout << "Десерты:\n";
     for (int i = 0; i < get_dish_count(); ++i) {
-        if (dishes[i].category == "Desserts") {
-            cout << "Dish " << i + 1 << ":\n";
-            cout << "Name: " << dishes[i].name << "\n";
-            cout << "Calories: " << dishes[i].calories << " kcal\n";
-            cout << "Weight: " << dishes[i].weight << " grams\n";
-            cout << "Price: $" << dishes[i].price << "\n\n";
+        if (dishes[i].category == "Десерты") {
+            cout << "Блюдо " << i + 1 << ":\n";
+            cout << "Название: " << dishes[i].name << "\n";
+            cout << "Калории: " << dishes[i].calories << " ккал\n";
+            cout << "Граммовки: " << dishes[i].weight << " грамм\n";
+            cout << "Прайс: " << dishes[i].price << " руб. \n\n";
         }
     }
 }
 
 void print_drinks() {
-    cout << "Drinks:\n";
+    cout << "Напитки:\n";
     for (int i = 0; i < get_dish_count(); ++i) {
-        if (dishes[i].category == "Drinks") {
-            cout << "Dish " << i + 1 << ":\n";
-            cout << "Name: " << dishes[i].name << "\n";
-            cout << "Calories: " << dishes[i].calories << " kcal\n";
-            cout << "Volume: " << dishes[i].weight << " ml\n";
-            cout << "Price: $" << dishes[i].price << "\n\n";
+        if (dishes[i].category == "Напитки") {
+            cout << "Блюдо " << i + 1 << ":\n";
+            cout << "Название: " << dishes[i].name << "\n";
+            cout << "Калории: " << dishes[i].calories << " ккал\n";
+            cout << "Объем: " << dishes[i].weight << " мл\n";
+            cout << "Прайс: " << dishes[i].price << " руб. \n\n";
         }
     }
 }
@@ -110,72 +108,72 @@ int main() {
     int choice;
 
     while (true) {
-        cout << "1. Add a dish\n";
-        cout << "2. Delete a dish\n";
-        cout << "3. Print all dishes\n";
-        cout << "4. Print first courses\n";
-        cout << "5. Print second courses\n";
-        cout << "6. Print desserts\n";
-        cout << "7. Print drinks\n";
-        cout << "8. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "1. Добавить блюдо\n";
+        cout << "2. Удалить блюдо\n";
+        cout << "3. Вывод всех блюд\n";
+        cout << "4. Вывод основных блюд\n";
+        cout << "5. Вывод вторых блюд\n";
+        cout << "6. Вывод дессертов\n";
+        cout << "7. Вывод напитков\n";
+        cout << "8. Выход\n";
+        cout << "Введите свой выбор: ";
         cin >> choice;
 
         if (choice == 1) {
             Dish new_dish;
             int category_choice;
 
-            cout << "Enter the name: ";
+            cout << "Введите название: ";
             cin.ignore();  
             getline(cin, new_dish.name);  
 
-            cout << "Select a category:\n";
-            cout << "1 - First Courses\n";
-            cout << "2 - Second Courses\n";
-            cout << "3 - Desserts\n";
-            cout << "4 - Drinks\n";
-            cout << "Enter the category number: ";
+            cout << "Выберите категорию:\n";
+            cout << "1 - Основные блюда\n";
+            cout << "2 - Вторые блюда\n";
+            cout << "3 - Дессерты\n";
+            cout << "4 - Напитки\n";
+            cout << "Введите номер категории: ";
             cin >> category_choice;
 
             cin.ignore(); 
 
             switch (category_choice) {
                 case 1:
-                    new_dish.category = "First Courses";
+                    new_dish.category = "Основные блюда";
                     break;
                 case 2:
-                    new_dish.category = "Second Courses";
+                    new_dish.category = "Вторые блюда";
                     break;
                 case 3:
-                    new_dish.category = "Desserts";
+                    new_dish.category = "Дессерты";
                     break;
                 case 4:
-                    new_dish.category = "Drinks";
+                    new_dish.category = "Напитки";
                     break;
                 default:
-                    cout << "Invalid category selection.\n";
+                    cout << "Неправильный выбор категории.\n";
                     continue;
             }
 
-            cout << "Enter the calories (in kcal): ";
+            cout << "Введите калории (в ккал): ";
             cin >> new_dish.calories;
 
-            if (new_dish.category == "Drinks") {
-                cout << "Enter the volume (in milliliters): ";  
+            if (new_dish.category == "Напитки") {
+                cout << "Введите объем (в мл): ";  
             } else {
-                cout << "Enter the weight (in grams): ";       
+                cout << "Введите объем (в граммах): ";       
             }
             cin >> new_dish.weight;
 
-            cout << "Enter the price: ";
+            cout << "Введите прайс: ";
             cin >> new_dish.price;
 
             add_dish(new_dish);
-            cout << "Dish added!\n\n";
+            cout << "Блюдо добавлено!\n\n";
 
         } else if (choice == 2) {
             int index;
-            cout << "Enter the index of the dish to delete: ";
+            cout << "Для удаления введите номер блюда: ";
             cin >> index;
             delete_dish(index - 1);
         } else if (choice == 3) {
@@ -191,7 +189,7 @@ int main() {
         } else if (choice == 8) {
             break;
         } else {
-            cout << "Invalid choice, please try again.\n";
+            cout << "Неправильный ввод, пожалуйста повторите.\n";
         }
     }
 
