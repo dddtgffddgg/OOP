@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Структура для хранения данных о друге
 struct Friend 
 {
     string lastName;     
@@ -34,12 +35,26 @@ vector<string> splitString(const string& str, int width) {
     return lines;
 }
 
-// Функция для печати строк столбцов в несколько строк, если данные длинные
-void printMultilineColumn(const vector<string>& lines) {
-    for (size_t i = 0; i < lines.size(); ++i) {
-        if (i > 0) cout << "| " << setw(COLUMN_WIDTH) << left << lines[i] << " |";
-        else cout << setw(COLUMN_WIDTH) << left << lines[i] << " |";
-        if (i < lines.size() - 1) cout << "\n";
+// Функция для печати строки таблицы с данными
+void printTableRow(const vector<vector<string>>& columns) {
+    size_t maxLines = 0;
+
+    // Определяем максимальное количество строк среди всех столбцов
+    for (const auto& col : columns) {
+        maxLines = max(maxLines, col.size());
+    }
+
+    // Печатаем построчно каждую часть данных
+    for (size_t line = 0; line < maxLines; ++line) {
+        cout << "|";
+        for (const auto& col : columns) {
+            if (line < col.size()) {
+                cout << " " << setw(COLUMN_WIDTH) << left << col[line] << " |";
+            } else {
+                cout << " " << setw(COLUMN_WIDTH) << " " << " |";
+            }
+        }
+        cout << "\n";
     }
 }
 
@@ -74,28 +89,17 @@ void printFriend(const Friend &f) {
     vector<string> addressLines = splitString(f.address, COLUMN_WIDTH);
     vector<string> phoneLines = splitString(f.phone, COLUMN_WIDTH);
     
-    // Определяем максимальное количество строк для данного друга
-    size_t maxLines = max({lastNameLines.size(), firstNameLines.size(), middleNameLines.size(), addressLines.size(), phoneLines.size(), 1UL});
+    // Формируем строку с датой рождения
+    string dateOfBirth = to_string(f.day) + "." + to_string(f.month) + "." + to_string(f.year);
+    vector<string> dateLines = splitString(dateOfBirth, COLUMN_WIDTH);
+    
+    // Собираем все столбцы в одну строку
+    vector<vector<string>> columns = {
+        lastNameLines, firstNameLines, middleNameLines, dateLines, addressLines, phoneLines
+    };
 
-    for (size_t i = 0; i < maxLines; ++i) {
-        cout << "| ";
-        printMultilineColumn(i < lastNameLines.size() ? vector<string>{lastNameLines[i]} : vector<string>{""});
-        printMultilineColumn(i < firstNameLines.size() ? vector<string>{firstNameLines[i]} : vector<string>{""});
-        printMultilineColumn(i < middleNameLines.size() ? vector<string>{middleNameLines[i]} : vector<string>{""});
-
-        // Печатаем дату рождения только на первой строке
-        if (i == 0) {
-            cout << right << setw(2) << setfill('0') << f.day << "."
-                 << setw(2) << setfill('0') << f.month << "."
-                 << f.year << " | ";
-        } else {
-            cout << setw(12) << " " << " | "; // Пустое место для выравнивания
-        }
-
-        printMultilineColumn(i < addressLines.size() ? vector<string>{addressLines[i]} : vector<string>{""});
-        printMultilineColumn(i < phoneLines.size() ? vector<string>{phoneLines[i]} : vector<string>{""});
-        cout << "\n";
-    }
+    // Печатаем строки таблицы
+    printTableRow(columns);
 }
 
 // Функция для печати всех друзей
@@ -104,13 +108,14 @@ void printAllFriends(const list<Friend> &friends) {
         cout << "[INFORMATION] --- Список друзей пуст.\n";
         return;
     }
+
     cout << "| " << setw(COLUMN_WIDTH) << "Фамилия" << " | " 
          << setw(COLUMN_WIDTH) << "Имя" << " | " 
          << setw(COLUMN_WIDTH) << "Отчество" << " | "
-         << "Дата рождения  | "
+         << setw(COLUMN_WIDTH) << "Дата рождения" << " | "
          << setw(COLUMN_WIDTH) << "Адрес" << " | "
          << setw(COLUMN_WIDTH) << "Телефон" << " |\n";
-    cout << string(COLUMN_WIDTH * 6 + 29, '-') << "\n";
+    cout << string((COLUMN_WIDTH + 3) * 6, '-') << "\n";
 
     for (const auto &f : friends) {
         printFriend(f);
