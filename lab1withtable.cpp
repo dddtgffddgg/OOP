@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iomanip> // Для форматирования вывода
+#include <iomanip> 
 #include <string>
 
 using namespace std;
@@ -17,7 +17,7 @@ struct Dish {
 Dish dishes[MAX_DISHES];
 int dish_count = 0; // количество блюд в данный момент
 
-// Функции для работы с блюдами
+
 int get_dish_count() {
     return dish_count;
 }
@@ -34,57 +34,55 @@ void add_dish(const Dish& new_dish) {
 void delete_dish(int index) {
     if (index >= 0 && index < get_dish_count()) {
         for (int i = index; i < dish_count - 1; ++i) {
-            dishes[i] = dishes[i + 1]; // сдвигаем элементы
+            dishes[i] = dishes[i + 1]; 
         }
-        dish_count--; // уменьшаем количество блюд
+        dish_count--; 
     } else {
         cout << "Неправильный ввод.\n";
     }
 }
 
-// Функция для вывода заголовка таблицы
-void print_table_header() {
+
+void print_table_header() { //заголовок таблицы
     cout << "| " << left << setw(3) << "№" 
-         << "| " << setw(25) << "Название" 
-         << "| " << setw(20) << "Категория" 
-         << "| " << setw(10) << "Калории" 
-         << "| " << setw(10) << "Вес" 
-         << "| " << setw(10) << "Цена" << " |" << endl;
-    cout << string(95, '-') << endl;
+         << "| " << setw(20) << "Название" 
+         << "| " << setw(23) << "Категория" 
+         << "| " << setw(17) << "Калории" 
+         << "| " << setw(9) << "Вес" 
+         << "| " << setw(16) << "Цена" << " |" << endl;
+    cout << string(100, '-') << endl;
 }
 
-// Вывод всех блюд в виде таблицы
-void print_dishes() {
+void print_dishes() { //вывод табл
     if (get_dish_count() == 0) {
         cout << "Список блюд пуст.\n";
         return;
     }
 
-    print_table_header(); // Заголовок таблицы
+    print_table_header(); 
     for (int i = 0; i < get_dish_count(); ++i) {
-        cout << "| " << left << setw(3) << i + 1
-             << "| " << setw(25) << dishes[i].name
-             << "| " << setw(20) << dishes[i].category
+        cout << "| " << left << setw(1) << i + 1
+             << "| " << setw(12) << dishes[i].name
+             << "| " << setw(23) << dishes[i].category
              << "| " << setw(10) << dishes[i].calories
-             << "| " << setw(10) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
-             << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
+             << "| " << setw(7) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+             << "| " << setw(7) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
     }
     cout << endl;
 }
 
-// Функция для вывода блюд по категории
 void print_dishes_by_category(const string& category_name) {
     bool found = false;
     print_table_header();
     for (int i = 0; i < get_dish_count(); ++i) {
         if (dishes[i].category == category_name) {
             found = true;
-            cout << "| " << left << setw(3) << i + 1
-                 << "| " << setw(20) << dishes[i].name
-                 << "| " << setw(8) << dishes[i].category
+            cout << "| " << left << setw(1) << i + 1
+                 << "| " << setw(12) << dishes[i].name
+                 << "| " << setw(25) << dishes[i].category
                  << "| " << setw(10) << dishes[i].calories
-                 << "| " << setw(10) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
-                 << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
+                 << "| " << setw(7) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+                 << "| " << setw(7) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
         }
     }
     if (!found) {
@@ -93,7 +91,6 @@ void print_dishes_by_category(const string& category_name) {
     cout << endl;
 }
 
-// Основное меню и функции для работы с категориями
 int main() {
     int choice;
 
