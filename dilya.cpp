@@ -1,9 +1,7 @@
 #include <iostream>
 #include <list>
 #include <string>
-#include <sstream>
 #include <iomanip>
-#include <vector>
 
 using namespace std;
 
@@ -19,44 +17,6 @@ struct Friend
     string address;      
     string phone;       
 };
-
-// Ограничения по ширине для столбцов
-const int COLUMN_WIDTH = 15;
-
-// Функция для разбивки строки на подстроки длиной не более COLUMN_WIDTH
-vector<string> splitString(const string& str, int width) {
-    vector<string> lines;
-    int start = 0;
-    while (start < str.length()) {
-        int length = min(width, static_cast<int>(str.length()) - start);
-        lines.push_back(str.substr(start, length));
-        start += length;
-    }
-    return lines;
-}
-
-// Функция для печати строки таблицы с данными
-void printTableRow(const vector<vector<string>>& columns) {
-    size_t maxLines = 0;
-
-    // Определяем максимальное количество строк среди всех столбцов
-    for (const auto& col : columns) {
-        maxLines = max(maxLines, col.size());
-    }
-
-    // Печатаем построчно каждую часть данных
-    for (size_t line = 0; line < maxLines; ++line) {
-        cout << "|";
-        for (const auto& col : columns) {
-            if (line < col.size()) {
-                cout << " " << setw(COLUMN_WIDTH) << left << col[line] << " |";
-            } else {
-                cout << " " << setw(COLUMN_WIDTH) << " " << " |";
-            }
-        }
-        cout << "\n";
-    }
-}
 
 // Функция для ввода данных о друге
 void inputFriend(Friend &f) 
@@ -81,25 +41,34 @@ void inputFriend(Friend &f)
     getline(cin, f.phone);
 }
 
-// Функция для печати информации о друге
-void printFriend(const Friend &f) {
-    vector<string> lastNameLines = splitString(f.lastName, COLUMN_WIDTH);
-    vector<string> firstNameLines = splitString(f.firstName, COLUMN_WIDTH);
-    vector<string> middleNameLines = splitString(f.middleName, COLUMN_WIDTH);
-    vector<string> addressLines = splitString(f.address, COLUMN_WIDTH);
-    vector<string> phoneLines = splitString(f.phone, COLUMN_WIDTH);
-    
-    // Формируем строку с датой рождения
-    string dateOfBirth = to_string(f.day) + "." + to_string(f.month) + "." + to_string(f.year);
-    vector<string> dateLines = splitString(dateOfBirth, COLUMN_WIDTH);
-    
-    // Собираем все столбцы в одну строку
-    vector<vector<string>> columns = {
-        lastNameLines, firstNameLines, middleNameLines, dateLines, addressLines, phoneLines
-    };
+// Функция для печати одного друга
+void printFriend(const Friend &f, int widths[]) {
+    cout << "| " << setw(widths[0]) << f.lastName 
+         << " | " << setw(widths[1]) << f.firstName 
+         << " | " << setw(widths[2]) << f.middleName 
+         << " | " << setw(widths[3]) << f.day << "." << setw(2) << f.month << "." << f.year 
+         << " | " << setw(widths[4]) << f.address 
+         << " | " << setw(widths[5]) << f.phone << " |\n";
+}
 
-    // Печатаем строки таблицы
-    printTableRow(columns);
+// Функция для нахождения максимальной ширины каждой колонки
+void findMaxWidths(const list<Friend> &friends, int widths[]) {
+    widths[0] = 8; // "Фамилия"
+    widths[1] = 4; // "Имя"
+    widths[2] = 8; // "Отчество"
+    widths[3] = 13; // "Дата рождения"
+    widths[4] = 6; // "Адрес"
+    widths[5] = 7; // "Телефон"
+    
+    for (const auto &f : friends) {
+        if (f.lastName.length() > widths[0]) widths[0] = f.lastName.length();
+        if (f.firstName.length() > widths[1]) widths[1] = f.firstName.length();
+        if (f.middleName.length() > widths[2]) widths[2] = f.middleName.length();
+        string dateOfBirth = to_string(f.day) + "." + to_string(f.month) + "." + to_string(f.year);
+        if (dateOfBirth.length() > widths[3]) widths[3] = dateOfBirth.length();
+        if (f.address.length() > widths[4]) widths[4] = f.address.length();
+        if (f.phone.length() > widths[5]) widths[5] = f.phone.length();
+    }
 }
 
 // Функция для печати всех друзей
@@ -109,16 +78,20 @@ void printAllFriends(const list<Friend> &friends) {
         return;
     }
 
-    cout << "| " << setw(COLUMN_WIDTH) << "Фамилия" << " | " 
-         << setw(COLUMN_WIDTH) << "Имя" << " | " 
-         << setw(COLUMN_WIDTH) << "Отчество" << " | "
-         << setw(COLUMN_WIDTH) << "Дата рождения" << " | "
-         << setw(COLUMN_WIDTH) << "Адрес" << " | "
-         << setw(COLUMN_WIDTH) << "Телефон" << " |\n";
-    cout << string((COLUMN_WIDTH + 3) * 6, '-') << "\n";
+    int widths[6];
+    findMaxWidths(friends, widths);
+
+    // Печатаем заголовок
+    cout << "| " << setw(widths[0]) << "Фамилия" 
+         << " | " << setw(widths[1]) << "Имя" 
+         << " | " << setw(widths[2]) << "Отчество" 
+         << " | " << setw(widths[3]) << "Дата рождения" 
+         << " | " << setw(widths[4]) << "Адрес" 
+         << " | " << setw(widths[5]) << "Телефон" << " |\n";
+    cout << string(2 + widths[0] + 3 + widths[1] + 3 + widths[2] + 3 + widths[3] + 3 + widths[4] + 3 + widths[5] + 2, '-') << "\n";
 
     for (const auto &f : friends) {
-        printFriend(f);
+        printFriend(f, widths);
     }
 }
 
@@ -129,8 +102,10 @@ void findFriendsByMonth(const list<Friend> &friends, int month)
     cout << "Друзья, родившиеся в месяце " << month << ":\n";
     for (const auto &f : friends) {
         if (f.month == month) {
-            printFriend(f);
             found = true;
+            int widths[6];
+            findMaxWidths(friends, widths);
+            printFriend(f, widths);
         }
     }
     if (!found) {
@@ -144,10 +119,10 @@ void removeFriend(list<Friend> &friends, int index) {
         cout << "[ERROR] Неверный индекс.\n";
         return;
     }
-    auto id = friends.begin();
-    advance(id, index);
-    friends.erase(id);
-    cout << "[INFORMATION] --- Друг удалён:(\n";
+    auto it = friends.begin();
+    advance(it, index);
+    friends.erase(it);
+    cout << "[INFORMATION] --- Друг удалён.\n";
 }
 
 // Печатаем менюшку
@@ -174,7 +149,7 @@ int main() {
                 Friend newFriend;
                 inputFriend(newFriend);
                 friends.push_back(newFriend);
-                cout << "[INFORMATION] --- Друг добавлен:)\n";
+                cout << "[INFORMATION] --- Друг добавлен.\n";
                 break;
             }
             case 2: {  
