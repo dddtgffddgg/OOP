@@ -17,7 +17,6 @@ struct Dish {
 Dish dishes[MAX_DISHES];
 int dish_count = 0; // количество блюд в данный момент
 
-
 int get_dish_count() {
     return dish_count;
 }
@@ -42,18 +41,17 @@ void delete_dish(int index) {
     }
 }
 
-
-void print_table_header() { //заголовок таблицы
-    cout << "| " << left << setw(3) << "№" 
+void print_table_header() { // заголовок таблицы
+    cout << "| " << left << setw(5) << "№" 
          << "| " << setw(20) << "Название" 
-         << "| " << setw(23) << "Категория" 
-         << "| " << setw(17) << "Калории" 
-         << "| " << setw(9) << "Вес" 
-         << "| " << setw(16) << "Цена" << " |" << endl;
-    cout << string(100, '-') << endl;
+         << "| " << setw(20) << "Категория" 
+         << "| " << setw(10) << "Калории" 
+         << "| " << setw(12) << "Вес" 
+         << "| " << setw(10) << "Цена" << " |" << endl;
+    cout << string(90, '-') << endl;
 }
 
-void print_dishes() { //вывод табл
+void print_dishes() { // вывод табл
     if (get_dish_count() == 0) {
         cout << "Список блюд пуст.\n";
         return;
@@ -61,13 +59,14 @@ void print_dishes() { //вывод табл
 
     print_table_header(); 
     for (int i = 0; i < get_dish_count(); ++i) {
-        cout << "| " << left << setw(1) << i + 1
-             << "| " << setw(12) << dishes[i].name
-             << "| " << setw(23) << dishes[i].category
+        cout << "| " << left << setw(5) << i + 1
+             << "| " << setw(20) << dishes[i].name
+             << "| " << setw(20) << dishes[i].category
              << "| " << setw(10) << dishes[i].calories
-             << "| " << setw(7) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
-             << "| " << setw(7) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
+             << "| " << setw(12) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+             << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
     }
+    cout << string(90, '-') << endl; // закрывающая строка таблицы
     cout << endl;
 }
 
@@ -77,14 +76,15 @@ void print_dishes_by_category(const string& category_name) {
     for (int i = 0; i < get_dish_count(); ++i) {
         if (dishes[i].category == category_name) {
             found = true;
-            cout << "| " << left << setw(1) << i + 1
-                 << "| " << setw(12) << dishes[i].name
-                 << "| " << setw(25) << dishes[i].category
+            cout << "| " << left << setw(5) << i + 1
+                 << "| " << setw(20) << dishes[i].name
+                 << "| " << setw(20) << dishes[i].category
                  << "| " << setw(10) << dishes[i].calories
-                 << "| " << setw(7) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
-                 << "| " << setw(7) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
+                 << "| " << setw(12) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+                 << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
         }
     }
+    cout << string(90, '-') << endl; // закрывающая строка таблицы
     if (!found) {
         cout << "Нет блюд в категории \"" << category_name << "\".\n";
     }
@@ -182,3 +182,4 @@ int main() {
 
     return 0;
 }
+
