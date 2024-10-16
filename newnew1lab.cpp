@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int MAX_DISHES = 100; // макс количество блюд
+const int MAX_DISHES = 100; //макс количество блюд
 
 struct Nutrients { 
     float carbs; //углеводы
@@ -22,7 +22,7 @@ struct Dish {
 };
 
 Dish dishes[MAX_DISHES];
-int dish_count = 0; // количество блюд в данный момент
+int dish_count = 0; //количество блюд в данный момент
 
 int get_dish_count() {
     return dish_count;
@@ -83,7 +83,7 @@ void print_dishes() { //вывод табл
     cout << endl;
 }
 
-void print_dishes_by_category(const string& category_name) { //фильтрование табл по категориям
+void print_dishes_by_category(const string& category_name) {
     bool found = false;
     print_table_header();
     for (int i = 0; i < get_dish_count(); ++i) {
@@ -107,7 +107,7 @@ void print_dishes_by_category(const string& category_name) { //фильтров�
     cout << endl;
 }
 
-int main() {
+int main() { 
     int choice;
 
     while (true) {
