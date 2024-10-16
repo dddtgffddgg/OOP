@@ -83,7 +83,7 @@ void print_dishes() { //вывод табл
     cout << endl;
 }
 
-void print_dishes_by_category(const string& category_name) {
+void print_dishes_by_category(const string& category_name) { //фильтрование табл по категориям
     bool found = false;
     print_table_header();
     for (int i = 0; i < get_dish_count(); ++i) {
