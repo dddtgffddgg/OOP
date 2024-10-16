@@ -6,12 +6,19 @@ using namespace std;
 
 const int MAX_DISHES = 100; // макс количество блюд
 
+struct Nutrients {
+    float carbs; // углеводы
+    float fats;  // жиры
+    float proteins; // белки
+};
+
 struct Dish {
     string name;
     string category;
     int calories;
     int weight;
     float price;
+    Nutrients nutrients; // добавляем структуру Nutrients
 };
 
 Dish dishes[MAX_DISHES];
@@ -45,10 +52,13 @@ void print_table_header() { // заголовок таблицы
     cout << "| " << left << setw(7) << "№" 
          << "| " << setw(25) << "Название" 
          << "| " << setw(20) << "Категория" 
-         << "| " << setw(15) << "Калории" 
+         << "| " << setw(19) << "Калории" 
          << "| " << setw(15) << "Вес" 
-         << "| " << setw(20) << "Цена" << " |" << endl;
-    cout << string(90, '-') << endl;
+         << "| " << setw(11) << "Угл" 
+         << "| " << setw(14) << "Жиры" 
+         << "| " << setw(15) << "Белки" 
+         << "| " << setw(18) << "Цена" << " |" << endl;
+    cout << string(130, '-') << endl;
 }
 
 void print_dishes() { // вывод табл
@@ -60,13 +70,16 @@ void print_dishes() { // вывод табл
     print_table_header(); 
     for (int i = 0; i < get_dish_count(); ++i) {
         cout << "| " << left << setw(5) << i + 1
-             << "| " << setw(20) << dishes[i].name
+             << "| " << setw(16) << dishes[i].name
              << "| " << setw(20) << dishes[i].category
              << "| " << setw(10) << dishes[i].calories
              << "| " << setw(12) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+             << "| " << setw(10) << dishes[i].nutrients.carbs
+             << "| " << setw(10) << dishes[i].nutrients.fats
+             << "| " << setw(10) << dishes[i].nutrients.proteins
              << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
     }
-    cout << string(90, '-') << endl; 
+    cout << string(130, '-') << endl; 
     cout << endl;
 }
 
@@ -81,10 +94,13 @@ void print_dishes_by_category(const string& category_name) {
                  << "| " << setw(20) << dishes[i].category
                  << "| " << setw(10) << dishes[i].calories
                  << "| " << setw(12) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
+                 << "| " << setw(10) << dishes[i].nutrients.carbs
+                 << "| " << setw(10) << dishes[i].nutrients.fats
+                 << "| " << setw(10) << dishes[i].nutrients.proteins
                  << "| " << setw(10) << fixed << setprecision(2) << dishes[i].price << " руб." << " |" << endl;
         }
     }
-    cout << string(90, '-') << endl; 
+    cout << string(130, '-') << endl; 
     if (!found) {
         cout << "Нет блюд в категории \"" << category_name << "\".\n";
     }
@@ -151,6 +167,15 @@ int main() {
                 cout << "Введите объем (в граммах): ";       
             }
             cin >> new_dish.weight;
+
+            cout << "Введите углеводы (г): ";
+            cin >> new_dish.nutrients.carbs;
+            
+            cout << "Введите жиры (г): ";
+            cin >> new_dish.nutrients.fats;
+            
+            cout << "Введите белки (г): ";
+            cin >> new_dish.nutrients.proteins;
 
             cout << "Введите прайс: ";
             cin >> new_dish.price;
