@@ -6,10 +6,10 @@ using namespace std;
 
 const int MAX_DISHES = 100; // макс количество блюд
 
-struct Nutrients {
-    float carbs; // углеводы
-    float fats;  // жиры
-    float proteins; // белки
+struct Nutrients { 
+    float carbs; //углеводы
+    float fats;  //жиры
+    float proteins;// белки
 };
 
 struct Dish {
@@ -18,7 +18,7 @@ struct Dish {
     int calories;
     int weight;
     float price;
-    Nutrients nutrients; // добавляем структуру Nutrients
+    Nutrients nutrients; //добавляю структуру Nutrients
 };
 
 Dish dishes[MAX_DISHES];
@@ -48,11 +48,11 @@ void delete_dish(int index) {
     }
 }
 
-void print_table_header() { // заголовок таблицы
+void print_table_header() { //заголовок таблицы
     cout << "| " << left << setw(7) << "№" 
-         << "| " << setw(25) << "Название" 
-         << "| " << setw(20) << "Категория" 
-         << "| " << setw(19) << "Калории" 
+         << "| " << setw(28) << "Название" 
+         << "| " << setw(21) << "Категория" 
+         << "| " << setw(17) << "Калории" 
          << "| " << setw(15) << "Вес" 
          << "| " << setw(11) << "Угл" 
          << "| " << setw(14) << "Жиры" 
@@ -61,7 +61,7 @@ void print_table_header() { // заголовок таблицы
     cout << string(130, '-') << endl;
 }
 
-void print_dishes() { // вывод табл
+void print_dishes() { //вывод табл
     if (get_dish_count() == 0) {
         cout << "Список блюд пуст.\n";
         return;
@@ -70,8 +70,8 @@ void print_dishes() { // вывод табл
     print_table_header(); 
     for (int i = 0; i < get_dish_count(); ++i) {
         cout << "| " << left << setw(5) << i + 1
-             << "| " << setw(16) << dishes[i].name
-             << "| " << setw(20) << dishes[i].category
+             << "| " << setw(23) << dishes[i].name
+             << "| " << setw(22) << dishes[i].category
              << "| " << setw(10) << dishes[i].calories
              << "| " << setw(12) << (to_string(dishes[i].weight) + (dishes[i].category == "Напитки" ? " мл" : " г"))
              << "| " << setw(10) << dishes[i].nutrients.carbs
