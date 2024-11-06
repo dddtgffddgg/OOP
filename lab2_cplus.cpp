@@ -25,7 +25,7 @@ public:
     float price;
     Nutrients nutrients;
 
-    //конструктор с основными параметрами блюда (название, категория, калории, вес)
+    //конструктор с основными параметрами блюда
     Dish(string name, string category, int calories, int weight)
         : name(name), category(category), calories(calories), weight(weight), price(0.0), nutrients() {}
     //конструктор для инициализации блюда с параметрами по умолчанию
